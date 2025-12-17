@@ -12,74 +12,123 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f2f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fce4ec; /* Hafif pembe arka plan */
             overflow: hidden;
             text-align: center;
         }
 
-        #container {
+        #ui-wrapper {
             display: flex;
-            gap: 20px;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
+            gap: 30px;
         }
 
-        button {
+        .button-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* Ana Buton Stili */
+        #yesBtn {
+            padding: 20px 40px;
+            font-size: 20px;
+            font-weight: 900;
+            color: white;
+            background-color: #ff1744;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: all 0.1s ease-out; /* Hızlı tepki için */
+            z-index: 999;
+        }
+
+        /* Hayır Buton Stili */
+        #noBtn {
             padding: 15px 30px;
             font-size: 18px;
             font-weight: bold;
+            color: white;
+            background-color: #37474f;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            transition: all 0.2s ease;
         }
 
-        #yesBtn {
-            background-color: #ff4757;
-            color: white;
-            z-index: 10;
-        }
-
-        #noBtn {
-            background-color: #2f3542;
-            color: white;
-        }
-
-        #message {
+        /* Mesaj Stili */
+        #resultMessage {
             display: none;
-            font-size: 3rem;
-            color: #ff4757;
-            font-weight: bold;
-            animation: shake 0.5s infinite;
+            font-size: 4rem;
+            color: #d50000;
+            font-weight: 900;
+            padding: 20px;
+            line-height: 1.2;
         }
 
-        @keyframes shake {
-            0% { transform: rotate(0deg); }
-            25% { transform: rotate(5deg); }
-            50% { transform: rotate(0eg); }
-            75% { transform: rotate(-5deg); }
-            100% { transform: rotate(0deg); }
-        }
+        h1 { color: #880e4f; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
-    <h1 id="question">Dürüst Ol...</h1>
-
-    <div id="container">
-        <button id="yesBtn" onclick="finish()">ŞIRFINTI MISIN?</button>
-        <button id="noBtn" onclick="shrinkNo()">HAYIR</button>
+    <div id="ui-wrapper">
+        <h1 id="questionText">DÜRÜST OL...</h1>
+        <div class="button-container">
+            <button id="yesBtn" onclick="showResult()">ŞIRFINTI MISIN?</button>
+            <button id="noBtn" onclick="processNoClick()">HAYIR</button>
+        </div>
     </div>
 
-    <div id="message">NOLDUU LANN YELLOOZZZ :) :) :)</div>
+    <div id="resultMessage">
+        NOOLDUU LAN <br> YEELLOOZZ :) :) :)
+    </div>
 
     <script>
-        let yesSize = 18;
-        let noSize = 18;
-        let paddingYes = 15;
-        let paddingNo = 15;
+        let currentFontSize = 20;
+        let currentPadding = 20;
+        let noButtonScale = 1;
 
-        function shrinkNo() {
-            const yesBtn = document.getElementById('yesBtn
+        function processNoClick() {
+            const yesBtn = document.getElementById('yesBtn');
+            const noBtn = document.getElementById('noBtn');
+
+            // Şırfıntı butonunu büyüt
+            currentFontSize += 50; 
+            currentPadding += 30;
+            yesBtn.style.fontSize = currentFontSize + 'px';
+            yesBtn.style.padding = currentPadding + 'px ' + (currentPadding * 2) + 'px';
+
+            // Hayır butonunu küçült
+            noButtonScale -= 0.15;
+            if (noButtonScale > 0.2) {
+                noBtn.style.transform = `scale(${noButtonScale})`;
+            } else {
+                noBtn.style.display = 'none'; // Çok küçülürse tamamen kaybolur
+            }
+
+            // Ekranı kaplama kontrolü (Belirli bir boyuttan sonra her yeri sarar)
+            if (currentFontSize > 350) {
+                yesBtn.style.position = 'fixed';
+                yesBtn.style.top = '0';
+                yesBtn.style.left = '0';
+                yesBtn.style.width = '100vw';
+                yesBtn.style.height = '100vh';
+                yesBtn.style.borderRadius = '0';
+                yesBtn.style.fontSize = '12vw';
+                noBtn.style.display = 'none';
+            }
+        }
+
+        function showResult() {
+            // Her şeyi gizle ve mesajı göster
+            document.getElementById('ui-wrapper').style.display = 'none';
+            const result = document.getElementById('resultMessage');
+            result.style.display = 'block';
+            document.body.style.backgroundColor = '#ffeb3b'; // Arka planı sarı yap
+        }
+    </script>
+</body>
+</html>
