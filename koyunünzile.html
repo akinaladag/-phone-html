@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iPhone Fix</title>
+
+<style>
+* {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+body {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #ffeaa7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    touch-action: none; /* iOS fix */
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn-style {
+    pointer-events: none;
+    font-weight: 900;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+#evet-gorsel {
+    background: #d63031;
+    color: white;
+    padding: 20px 40px;
+    font-size: 20px;
+}
+
+#hayir-gorsel {
+    background: #2d3436;
+    color: white;
+    padding: 10px 25px;
+    font-size: 16px;
+}
+
+/* GÖRÜNMEZ TETİKLEYİCİLER */
+.touch-trigger {
+    position: absolute;
+    background: transparent;
+    z-index: 999;
+}
+
+#trigger-evet {
+    width: 220px;
+    height: 90px;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#trigger-hayir {
+    width: 140px;
+    height: 70px;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#final-screen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: black;
+    color: #fab1a0;
+    font-size: 40px;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div id="evet-gorsel" class="btn-style">ŞIRFINTI MISIN?</div>
+    <div id="hayir-gorsel" class="btn-style">HAYIR</div>
+
+    <div id="trigger-evet" class="touch-trigger"></div>
+    <div id="trigger-hayir" class="touch-trigger"></div>
+</div>
+
+<div id="final-screen">NOLDU LAANN YELLOZZZZ</div>
+
+<script>
+let scale = 1;
+let fontSize = 20;
+let pressCount = 0;
+
+const evet = document.getElementById("evet-gorsel");
+const hayir = document.getElementById("hayir-gorsel");
+const tEvet = document.getElementById("trigger-evet");
+const tHayir = document.getElementById("trigger-hayir");
+const final = document.getElementById("final-screen");
+
+function hayirBas() {
+    pressCount++;
+
+    fontSize += 40;
+    evet.style.fontSize = fontSize + "px";
+    evet.style.padding = fontSize + "px " + (fontSize * 1.5) + "px";
+
+    scale -= 0.15;
+    if (scale > 0.3) {
+        hayir.style.transform = `scale(${scale})`;
+    } else {
+        hayir.style.display = "none";
+        tHayir.style.display = "none";
+    }
+
+    if (fontSize > 120) {
+        evet.style.position = "fixed";
+        evet.style.inset = "0";
+        evet.style.borderRadius = "0";
+        evet.style.display = "flex";
+        evet.style.justifyContent = "center";
+        evet.style.alignItems = "center";
+
+        tEvet.style.position = "fixed";
+        tEvet.style.inset = "0";
+    }
+}
+
+function evetBas() {
+    if (pressCount > 0) {
+        final.style.display = "flex";
+    }
+}
+
+tHayir.addEventListener("touchstart", hayirBas);
+tHayir.addEventListener("click", hayirBas);
+
+tEvet.addEventListener("touchstart", evetBas);
+tEvet.addEventListener("click", evetBas);
+</script>
+
+</body>
+</html>
