@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karar Anı!</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #yesBtn {
+            background-color: #ff4757;
+            color: white;
+            z-index: 10;
+        }
+
+        #noBtn {
+            background-color: #2f3542;
+            color: white;
+        }
+
+        #message {
+            display: none;
+            font-size: 3rem;
+            color: #ff4757;
+            font-weight: bold;
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            50% { transform: rotate(0eg); }
+            75% { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="question">Dürüst Ol...</h1>
+
+    <div id="container">
+        <button id="yesBtn" onclick="finish()">ŞIRFINTI MISIN?</button>
+        <button id="noBtn" onclick="shrinkNo()">HAYIR</button>
+    </div>
+
+    <div id="message">NOLDUU LANN YELLOOZZZ :) :) :)</div>
+
+    <script>
+        let yesSize = 18;
+        let noSize = 18;
+        let paddingYes = 15;
+        let paddingNo = 15;
+
+        function shrinkNo() {
+            const yesBtn = document.getElementById('yesBtn
